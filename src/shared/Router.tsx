@@ -1,8 +1,9 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Detail from "../pages/Detail";
 import Home from "../pages/Home";
+import React from "react";
 
-const Router = () => {
+const Router: React.FC = () => {
   return (
     <BrowserRouter>
       <Routes>
