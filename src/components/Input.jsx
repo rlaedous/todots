@@ -1,10 +1,19 @@
 import React, { useState } from "react";
 import shortid from "shortid";
-import { addTodo } from "../redux/modules/todos";
-import { useDispatch } from "react-redux";
+// import { addTodo } from "../redux/modules/todos";
+// import { useDispatch } from "react-redux";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { addTodo } from "../api/todos";
 
 function Input() {
-  const dispatch = useDispatch();
+  const queryClient = useQueryClient();
+  const { mutate: mutateToAdd } = useMutation({
+    mutationFn: addTodo,
+    onSuccess: async () => {
+      await queryClient.invalidateQueries(["todos"]);
+    },
+  });
+  // const dispatch = useDispatch();
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
   const onSubmitHandler = (e) => {
@@ -15,7 +24,8 @@ function Input() {
       body,
       isDone: false,
     };
-    dispatch(addTodo(newTodo));
+    mutateToAdd(newTodo);
+    // dispatch(addTodo(newTodo));
     setTitle("");
     setBody("");
   };

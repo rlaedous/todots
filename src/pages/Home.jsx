@@ -6,19 +6,19 @@ import { useNavigate } from "react-router-dom";
 import Input from "../components/Input";
 import TodoList from "../components/TodoList";
 const Home = () => {
-  const dispatch = useDispatch();
-  const reduxTodos = useSelector((state) => state.todos);
+  // const dispatch = useDispatch();
+  // const reduxTodos = useSelector((state) => state.todos);
 
-  const idTodo = reduxTodos.map((item) => item.id);
+  // const idTodo = reduxTodos.map((item) => item.id);
 
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
-  const [isDone, setIsDone] = useState(false);
-  const [isActive, setIsActive] = useState(false);
+  // const [isDone, setIsDone] = useState(false);
+  // const [isActive, setIsActive] = useState(false);
 
-  const goDetail = () => {
-    navigate(`/${idTodo}`);
-  };
+  // const goDetail = () => {
+  //   navigate(`/${idTodo}`);
+  // };
 
   return (
     <>
