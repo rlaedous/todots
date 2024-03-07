@@ -7,23 +7,23 @@ export type Todo = {
   body: string;
   isDone: boolean;
 };
-const SERVER_URI = "http://localhost:5000";
+
 
 const getTodos = async () :Promise<Todo[]>=> {
-  const response = await axios.get(`${SERVER_URI}/todos`);
+  const response = await axios.get(`${process.env.REACT_APP_API_KEY}/todos`);
   return response.data;
 };
 
 const addTodo = async (payload: Omit<Todo, "id">):Promise<void> => {
-  await axios.post(`${SERVER_URI}/todos`, payload);
+  await axios.post(`${process.env.REACT_APP_API_KEY}/todos`, payload);
 };
 
 const removeTodo = async (id:string):Promise<void> => {
-  await axios.delete(`${SERVER_URI}/todos/${id}`);
+  await axios.delete(`${process.env.REACT_APP_API_KEY}/todos/${id}`);
 };
 
 const switchTodo = async (payload:{id:string; isDone :boolean}):Promise<void> => {
-  await axios.patch(`${SERVER_URI}/todos/${payload.id}`, {
+  await axios.patch(`${process.env.REACT_APP_API_KEY}/todos/${payload.id}`, {
     isDone: !payload.isDone,
   });
 };
