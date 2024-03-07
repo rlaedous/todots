@@ -1,7 +1,4 @@
 import React, { useState } from "react";
-import shortid from "shortid";
-// import { addTodo } from "../redux/modules/todos";
-// import { useDispatch } from "react-redux";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { addTodo } from "../api/todos";
 
@@ -10,29 +7,28 @@ function Input() {
   const { mutate: mutateToAdd } = useMutation({
     mutationFn: addTodo,
     onSuccess: async () => {
-      await queryClient.invalidateQueries(["todos"]);
+      await queryClient.invalidateQueries({queryKey:["todos"]});
     },
   });
-  // const dispatch = useDispatch();
+
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
-  const onSubmitHandler = (e) => {
+  const onSubmitHandler = (e:React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const newTodo = {
-      id: shortid.generate(),
+      
       title,
       body,
       isDone: false,
     };
     mutateToAdd(newTodo);
-    // dispatch(addTodo(newTodo));
     setTitle("");
     setBody("");
   };
-  const titleChangeHandler = (e) => {
+  const titleChangeHandler = (e:React.ChangeEvent<HTMLInputElement>) => {
     setTitle(e.target.value);
   };
-  const contentChangeHandler = (e) => {
+  const contentChangeHandler = (e:React.ChangeEvent<HTMLInputElement>) => {
     setBody(e.target.value);
   };
   return (

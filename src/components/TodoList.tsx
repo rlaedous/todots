@@ -1,14 +1,12 @@
 import React from "react";
-// import { useDispatch, useSelector } from "react-redux";
-// import { deleteTodo, switchTodo } from "../redux/modules/todos";
-import { Link } from "react-router-dom";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { addTodo, getTodos, removeTodo, switchTodo } from "../api/todos";
+import { Todo, getTodos, removeTodo, switchTodo } from "../api/todos";
 
-function TodoList({ isActive }) {
-  // const dispatch = useDispatch();
-  // const todo = useSelector((state) => state.todos);
-  const { data, isLoading } = useQuery({
+interface TodoListProps {
+  isActive: boolean;
+}
+function TodoList({ isActive }:TodoListProps) {
+  const { data, isLoading } = useQuery<Todo[]>({
     queryKey: ["todos"],
     queryFn: getTodos,
   });
@@ -17,18 +15,17 @@ function TodoList({ isActive }) {
   const { mutate: mutateToDelete } = useMutation({
     mutationFn: removeTodo,
     onSuccess: async () => {
-      await queryClient.invalidateQueries(["todos"]);
+      await queryClient.invalidateQueries({queryKey:["todos"]});
     },
   });
 
   const { mutate: mutateToSwitch } = useMutation({
     mutationFn: switchTodo,
     onSuccess: async () => {
-      await queryClient.invalidateQueries(["todos"]);
+      await queryClient.invalidateQueries({queryKey:["todos"]});
     },
   });
-  console.log("data", data);
-  // console.log("todo", todo);
+
   if (isLoading) {
     return <div>로딩중입니다.</div>;
   }
@@ -36,7 +33,7 @@ function TodoList({ isActive }) {
     <>
       <div>{isActive ? "해야할일" : "끝낸일"}</div>
       {data
-        .filter((item) => item.isDone === !isActive)
+        ?.filter((item) => item.isDone === !isActive)
         .map((item) => {
           return (
             <div

@@ -13,7 +13,7 @@
       "isolatedModules": true,
       "jsx": "react"
     },
-    "include": ["src/**/*.ts", "src/**/*.tsx", "src/components/Input.jsx", "src/components/TodoList.jsx", "src/pages/Detail.jsx", "src/pages/Home.jsx"],
+    "include": ["src/**/*.ts", "src/**/*.tsx", "src/components/Input.tsx", "src/components/TodoList.tsx", "src/pages/Detail.tsx", "src/pages/Home.tsx"],
     "exclude": ["node_modules"]
   }
   
